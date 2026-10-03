@@ -37,21 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-  // ---------- Highlight the nav link of the section in view ----------
-  const sections = document.querySelectorAll("main section[id]");
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        navLinks.forEach((link) => {
-          link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
-        });
-      });
-    },
-    { rootMargin: "-45% 0px -50% 0px" }
-  );
-  sections.forEach((section) => sectionObserver.observe(section));
-
   // ---------- Reveal elements on scroll ----------
   const revealObserver = new IntersectionObserver(
     (entries, observer) => {
@@ -116,7 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");
 
-  form.addEventListener("submit", (e) => {
+  // Only the contact page has the form
+  if (form) form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const name = form.elements.name;
