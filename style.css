@@ -25,7 +25,7 @@
 html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
 
 body {
-  font-family: "Montserrat", system-ui, sans-serif;
+  font-family: "Open Sans", system-ui, sans-serif;
   color: var(--text);
   background: var(--white);
   line-height: 1.6;
@@ -196,16 +196,10 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
 /* ============ Page hero (inner pages) ============ */
 .page-hero {
   position: relative;
-  padding: calc(var(--header-h) + 70px) 0 70px;
+  padding: calc(var(--header-h) + 50px) 0 30px;
   background: var(--dark);
   color: var(--white);
   overflow: hidden;
-}
-.page-hero::after {
-  content: "";
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 4px;
-  background: var(--brand-gradient);
 }
 .page-hero-inner { position: relative; }
 .page-hero .eyebrow { color: var(--cyan); }
@@ -360,7 +354,7 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
 .stat p { font-size: 0.78rem; color: #aeb4be; }
 
 /* ============ Sections ============ */
-.section { padding: 90px 0; }
+.section { padding: 60px 0 90px; }
 .section-alt { background: var(--light); }
 .section-head { max-width: 640px; margin-bottom: 44px; }
 .section-head p:not(.eyebrow) { color: var(--muted); }
@@ -696,10 +690,10 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
 /* Headline words slide up from behind a mask */
 .word-mask { display: inline-block; overflow: hidden; vertical-align: top; }
 .word { display: inline-block; }
-/* Reading progress line across the top of the window */
+/* Reading progress line along the bottom edge of the navbar */
 .scroll-progress {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
-  height: 3px;
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 101;
+  height: 4px;
   background: var(--brand-gradient);
   transform: scaleX(0); transform-origin: left;
   pointer-events: none;
@@ -747,7 +741,7 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
   .director-card { position: static; max-width: 340px; margin-inline: auto; width: 100%; }
   .hero { min-height: auto; }
   .hero-logo { width: 100%; max-width: 420px; margin-inline: auto; order: -1; }
-  .section { padding: 70px 0; }
+  .section { padding: 48px 0 70px; }
 }
 
 @media (max-width: 560px) {
@@ -906,3 +900,63 @@ html { background: #22262c; }
 .footer-credit { background: linear-gradient(90deg, var(--navy), var(--purple), var(--pink)); color: var(--white); }
 .footer-credit p { padding: 14px 0; font-size: 0.88rem; font-weight: 500; text-align: center; }
 .credit-sep { margin: 0 6px; opacity: 0.7; }
+
+/* Smaller product cards in the "We also provide" section */
+#products .panels-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; }
+#products .panel-card { padding: 10px; }
+#products .panel-visual { height: 140px; border: 0; }
+@media (max-width: 1024px) { #products .panels-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 560px) { #products .panels-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============ Brochure content ============ */
+.tab-intro { color: #c5cad3; margin-bottom: 20px; max-width: 760px; }
+.tab-sub { margin: 26px 0 12px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); }
+
+.scope-block { margin-top: 44px; }
+.scope-block h3 { font-size: 1.25rem; margin-bottom: 6px; }
+.scope-block > p { color: #c5cad3; margin-bottom: 20px; }
+.scope-block .checklist { grid-template-columns: repeat(2, 1fr); max-width: 860px; }
+
+/* 44-point check sheet */
+.checksheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+.checksheet h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.checksheet h3 span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); }
+.checksheet ol { list-style: none; counter-reset: point; display: grid; gap: 9px; }
+.checksheet li { counter-increment: point; display: flex; gap: 12px; font-size: 0.88rem; line-height: 1.45; }
+.checksheet li::before { content: counter(point, decimal-leading-zero); flex-shrink: 0; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+/* Manpower: roles and compliance items with a line of detail */
+.roles-detail span { display: grid; gap: 4px; align-content: start; }
+.roles-detail small { font-size: 0.8rem; font-weight: 500; line-height: 1.45; color: #b7bcc5; }
+.manpower-grid .muted { margin-top: 6px; }
+.compliance-intro { font-size: 0.9rem; color: var(--muted); margin: -8px 0 18px; }
+.checklist-detail li span { display: grid; gap: 1px; }
+.checklist-detail small { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+
+/* Clients: project record */
+.project-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+.project-list li {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem; line-height: 1.45;
+}
+.project-num { font-weight: 700; color: var(--cyan); font-variant-numeric: tabular-nums; }
+.project-name { color: #e3e6ea; }
+.project-client { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #aeb4be; text-align: right; white-space: nowrap; }
+
+@media (max-width: 860px) {
+  .checksheet-grid, .project-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .scope-block .checklist { grid-template-columns: 1fr; }
+  .project-list li { grid-template-columns: auto 1fr; }
+  .project-client { grid-column: 2; text-align: left; white-space: normal; }
+}
+
+/* Hover enlargement on the Services tabs: utility / system cards and material chips */
+.material, .chips span { transition: scale 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .material:hover { scale: 1.05; position: relative; z-index: 1; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4); }
+  .chips span:hover { scale: 1.08; position: relative; z-index: 1; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); }
+}

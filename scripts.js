@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Reading progress line across the top of the window
+    // Reading progress line along the bottom edge of the navbar
     const progress = document.createElement("div");
     progress.className = "scroll-progress";
     document.body.append(progress);
