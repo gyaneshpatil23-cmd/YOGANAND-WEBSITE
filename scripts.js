@@ -424,16 +424,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ---------- Contact form -> opens email app ----------
+  // ---------- Contact form -> sent by send-enquiry.php ----------
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");
 
   // Only the contact page has the form
-  if (form) form.addEventListener("submit", (e) => {
+  if (form) form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = form.elements.name;
     const phone = form.elements.phone;
+    const button = form.querySelector('button[type="submit"]');
     let valid = true;
 
     [name, phone].forEach((field) => field.classList.remove("invalid"));
@@ -453,25 +454,30 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const service = form.elements.service.value;
-    const subject = `Enquiry: ${service} - ${name.value.trim()}`;
-    const body = [
-      `Name: ${name.value.trim()}`,
-      `Phone: ${phone.value.trim()}`,
-      `Company / Plant: ${form.elements.company.value.trim() || "-"}`,
-      `Interested in: ${service}`,
-      "",
-      form.elements.message.value.trim(),
-    ].join("\n");
+    const failed = "Sorry, your enquiry could not be sent. Please call us at 9850953797.";
+    button.disabled = true;
+    button.textContent = "Sending…";
+    note.textContent = "";
+    note.className = "form-note";
 
-    window.location.href =
-      "mailto:service@yoganandelectricals.com" +
-      "?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-
-    note.textContent = "Thank you! Your email app should open now. You can also call us at 9850953797.";
-    note.className = "form-note success";
-    form.reset();
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      // Only report success when the server confirms the email was handed over
+      const result = await response.json();
+      note.textContent = result.message || failed;
+      note.className = "form-note " + (response.ok && result.ok ? "success" : "error");
+      if (response.ok && result.ok) form.reset();
+    } catch (error) {
+      note.textContent = failed;
+      note.className = "form-note error";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Send Enquiry";
+    }
   });
 
   // ---------- Footer year ----------

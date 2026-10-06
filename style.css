@@ -971,3 +971,25 @@ html { background: #22262c; }
 /* Credit strip: link to the developer's site */
 .footer-credit a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .footer-credit a:hover { text-decoration-thickness: 2px; }
+
+/* Enquiry form: spam trap field is kept out of sight, and the button shows it is busy */
+.form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.btn:disabled { opacity: 0.6; cursor: progress; transform: none; }
+
+/* ============ Small-screen fixes from the device check ============ */
+@media (max-width: 860px) {
+  /* The open menu scrolls when it is taller than the screen (phone held sideways) */
+  .nav-menu { max-height: calc(100vh - var(--header-h)); max-height: calc(100dvh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; }
+  .nav-menu > * { flex-shrink: 0; }
+  /* 16px form text stops iPhones zooming the page when a field is tapped */
+  .contact-form input, .contact-form select, .contact-form textarea { font-size: 1rem; }
+  /* Larger tap areas for the links in the footer and contact details */
+  .footer-col ul { gap: 4px; }
+  .footer-links a, .footer-contact a { padding: 8px 0; }
+  .footer-contact svg { margin-top: 12px; }
+  .footer-contact li > span:not(:has(a)) { padding: 8px 0; }
+  .contact-item a, .offices a { display: inline-block; padding: 6px 0; }
+}
+@media (max-width: 560px) {
+  .brand-text small { font-size: 0.72rem; }
+}

@@ -85,8 +85,10 @@
           </div>
         </div>
 
-        <form class="contact-form reveal" id="contactForm" novalidate>
+        <form class="contact-form reveal" id="contactForm" action="send-enquiry.php" method="post" novalidate>
           <h3>Send an enquiry</h3>
+          <!-- Left empty by people; filled by spam bots, which the server then ignores -->
+          <label class="form-trap" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
           <label>Your name<input type="text" name="name" required></label>
           <label>Phone<input type="tel" name="phone" required></label>
           <label>Company / Plant<input type="text" name="company"></label>
@@ -102,7 +104,7 @@
           </label>
           <label>Message<textarea name="message" rows="4"></textarea></label>
           <button type="submit" class="btn btn-block">Send Enquiry</button>
-          <p class="form-note" id="formNote">Opens your email app with the details filled in.</p>
+          <p class="form-note" id="formNote" role="status">We reply on the phone number you give here.</p>
         </form>
       </div>
     </section>
