@@ -174,8 +174,8 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
 
 .hero-logo { text-align: center; }
 .logo-card img { width: 100%; height: auto; }
-.logo-card.cover-card { padding: 8px; }
-.cover-card img { border-radius: 18px; }
+.logo-card.cover-card { padding: 0; }
+.cover-card img { border-radius: 23px; }
 .logo-card {
   position: relative;
   padding: 26px;
@@ -186,8 +186,8 @@ h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
 }
 .logo-card::before {
   content: "";
-  position: absolute; inset: -3px; z-index: -1;
-  border-radius: 26px;
+  position: absolute; inset: -5px; z-index: -1;
+  border-radius: 28px;
   background: var(--brand-gradient);
 }
 @keyframes float { 50% { transform: translateY(-12px); } }
@@ -993,3 +993,74 @@ html { background: #22262c; }
 @media (max-width: 560px) {
   .brand-text small { font-size: 0.72rem; }
 }
+
+/* ============ Home banner slideshow ============ */
+.hero-slides { position: relative; aspect-ratio: 3 / 2; border-radius: 23px; overflow: hidden; background: #1c1f25; }
+.hero-slides { display: flex; }
+/* The pictures sit side by side and the whole row slides left to show the next one */
+.hero-slides img {
+  flex: 0 0 100%;
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 0;
+  transform: translateX(calc(var(--slide, 0) * -100%));
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.slide-dots { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 4px; }
+/* Each dot is a 24px tap area with a small visible dot inside */
+.slide-dots button { width: 24px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.slide-dots button::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+.slide-dots button[aria-current="true"]::before { width: 22px; border-radius: 4px; background: var(--white); }
+/* A tall (portrait) picture in the wide frame: keep the upper part, where the faces are */
+.hero-slides img.slide-tall { object-position: center 20%; }
+
+/* ============ Brochure pictures ============ */
+/* Picture across the top of a utility card */
+.material-img {
+  display: block;
+  width: calc(100% + 44px); max-width: none; height: 150px;
+  margin: -22px -22px 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.material-img.cover { object-fit: cover; }
+.material-img.contain { object-fit: contain; padding: 10px; }
+
+/* Pictures with a caption underneath (systems we work on) */
+.caption-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+.caption-grid figure { border-radius: var(--radius); background: var(--white); border: 1px solid rgba(255, 255, 255, 0.9); overflow: hidden; color: var(--text); }
+.caption-grid img { width: 100%; height: 170px; object-fit: contain; padding: 12px; }
+.caption-grid figcaption { padding: 10px 14px 14px; font-size: 0.88rem; font-weight: 700; border-top: 1px solid var(--border); }
+
+/* Photo galleries */
+.photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.photo-grid figure { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #2d3138; border: 1px solid rgba(255, 255, 255, 0.12); }
+.photo-grid figure.wide { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.photo-grid img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: scale 0.4s ease; }
+.photo-grid figcaption {
+  position: absolute; left: 10px; bottom: 10px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(18, 20, 24, 0.82); color: var(--white);
+  font-size: 0.78rem; font-weight: 700;
+}
+@media (hover: hover) and (pointer: fine) { .photo-grid figure:hover img { scale: 1.05; } }
+
+/* Product names under the small product pictures */
+#products .panel-card h3 { margin-top: 8px; font-size: 0.78rem; line-height: 1.3; text-align: center; letter-spacing: 0; }
+
+@media (max-width: 1024px) {
+  .caption-grid, .photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .photo-grid:not(.captioned) { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .photo-grid.captioned, .caption-grid { grid-template-columns: 1fr; }
+}
+/* Six utility cards with pictures: three per row */
+#utilities .materials-grid { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { #utilities .materials-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { #utilities .materials-grid { grid-template-columns: 1fr; } }

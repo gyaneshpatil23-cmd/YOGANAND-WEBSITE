@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.documentElement.addEventListener("pointerleave", () => gsap.to(glow, { opacity: 0, duration: 0.6, overwrite: "auto" }));
     }
 
-    // ----- Pointer tilt: cards and the banner picture lean toward the mouse -----
+    // ----- Pointer tilt: cards lean toward the mouse -----
     if (finePointer) {
       document.querySelectorAll(".explore-card, .service-card, .panel-card, .stat").forEach((card) => {
         card.addEventListener("pointermove", (e) => {
@@ -328,23 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
       });
-
-      const hero = document.querySelector(".hero");
-      const picture = hero && hero.querySelector(".logo-card img");
-      if (picture) {
-        gsap.set(picture, { transformPerspective: 900 });
-        const tiltX = gsap.quickTo(picture, "rotationX", { duration: 0.8, ease: "power3.out" });
-        const tiltY = gsap.quickTo(picture, "rotationY", { duration: 0.8, ease: "power3.out" });
-        hero.addEventListener("pointermove", (e) => {
-          const box = hero.getBoundingClientRect();
-          tiltY(((e.clientX - box.left) / box.width - 0.5) * 8);
-          tiltX(-((e.clientY - box.top) / box.height - 0.5) * 6);
-        });
-        hero.addEventListener("pointerleave", () => {
-          tiltX(0);
-          tiltY(0);
-        });
-      }
     }
 
     // ----- Ticker: the strip of services scrolls sideways without a gap -----
@@ -479,6 +462,56 @@ document.addEventListener("DOMContentLoaded", () => {
       button.textContent = "Send Enquiry";
     }
   });
+
+  // ---------- Home banner slideshow ----------
+  const slides = document.getElementById("heroSlides");
+  if (slides) {
+    const dots = document.getElementById("slideDots");
+    const pictures = () => Array.from(slides.querySelectorAll("img"));
+    let current = 0;
+    let timer;
+
+    const show = (index) => {
+      const list = pictures();
+      if (!list.length) return;
+      current = (index + list.length) % list.length;
+      list.forEach((img, i) => img.classList.toggle("active", i === current));
+      slides.style.setProperty("--slide", current);
+      Array.from(dots.children).forEach((dot, i) => dot.setAttribute("aria-current", String(i === current)));
+    };
+
+    // One dot per picture that actually loaded
+    const buildDots = () => {
+      const list = pictures();
+      dots.replaceChildren(
+        ...(list.length > 1 ? list : []).map((img, i) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.setAttribute("aria-label", `Show picture ${i + 1} of ${list.length}`);
+          dot.addEventListener("click", () => {
+            show(i);
+            start();
+          });
+          return dot;
+        })
+      );
+      show(Math.min(current, list.length - 1));
+    };
+
+    const stop = () => clearInterval(timer);
+    const start = () => {
+      stop();
+      timer = setInterval(() => pictures().length > 1 && show(current + 1), 4000);
+    };
+
+    // A picture missing from the folder removes itself; rebuild the dots when that happens
+    new MutationObserver(buildDots).observe(slides, { childList: true });
+    buildDots();
+    start();
+    slides.addEventListener("pointerenter", stop);
+    slides.addEventListener("pointerleave", start);
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  }
 
   // ---------- Footer year ----------
   document.getElementById("year").textContent = new Date().getFullYear();

@@ -61,7 +61,15 @@
         </div>
         <div class="hero-logo reveal">
           <div class="logo-card cover-card">
-            <img src="images/coverimage.jpg" alt="Yoganand technicians maintaining machines and control panels on the shop floor">
+            <!-- Slideshow: add or remove <img> lines here. A file that is missing from the images folder is skipped. -->
+            <div class="hero-slides" id="heroSlides" aria-roledescription="carousel" aria-label="Yoganand teams at work">
+              <img src="images/team.jpg" alt="Yoganand team receiving recognition from a client at the plant" onerror="this.remove()">
+              <img src="images/team1.jpg" alt="Yoganand team member being recognised by a client at the plant" class="slide-tall" loading="lazy" onerror="this.remove()">
+              <img src="images/team2.jpg" alt="Yoganand technicians working on an assembly line" loading="lazy" onerror="this.remove()">
+              <img src="images/team3.jpg" alt="Yoganand technician maintaining a machine" loading="lazy" onerror="this.remove()">
+              <img src="images/team4.jpg" alt="Yoganand technician operating a CNC machine" loading="lazy" onerror="this.remove()">
+              <div class="slide-dots" id="slideDots"></div>
+            </div>
           </div>
         </div>
       </div>
