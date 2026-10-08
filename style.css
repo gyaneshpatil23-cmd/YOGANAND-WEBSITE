@@ -1064,3 +1064,12 @@ html { background: #22262c; }
 #utilities .materials-grid { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 860px) { #utilities .materials-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { #utilities .materials-grid { grid-template-columns: 1fr; } }
+
+/* ============ Phone: banner buttons side by side, smaller "What we do" label ============ */
+@media (max-width: 560px) {
+  .hero .hero-actions { flex-wrap: nowrap; gap: 10px; }
+  .hero .hero-actions .btn { flex: 1 1 0; min-width: 0; padding: 12px 8px; font-size: 0.84rem; text-align: center; white-space: nowrap; }
+  .ticker-label { padding: 10px 12px; font-size: 0.6rem; letter-spacing: 0.14em; }
+  .ticker-list li { padding: 10px 0; font-size: 0.8rem; }
+  .ticker-list li::after { margin: 0 18px; }
+}
